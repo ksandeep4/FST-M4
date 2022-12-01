@@ -1,0 +1,43 @@
+CREATE DATABASE office;
+
+USE office;
+
+CREATE TABLE employee (id INT, name STRING, dept STRING, yoj INT, salary INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
+TBLPROPERTIES("skip.header.line.count"="1");
+
+-- load data in Employee table
+LOAD DATA LOCAL INPATH '/ksandeep4/EmpData.csv' INTO TABLE employee;
+
+SELECT * FROM employee;
+
+-- Run MapREduce
+SELECT COUNT(*) FROM employee;
+
+
+-- To export results to HDFS
+INSERT OVERWRITE DIRECTORY '/user/ksandeep4/output/export'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM employee WHERE dept='IT';
+
+-- To view output file
+dfs -ls /user/ksandeep4/output/export
+-- To view data in output file
+dfs -cat /user/ksandeep4/output/export/0000_0
+
+INSERT OVERWRITE LOCAL DIRECTORY '/user/ksandeep4/output/export'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM employee WHERE dept='IT';
+
+--IF want to update output location (allowed only in LOCAL)
+Cat /user/ksandeep4/output/export/0000_0 > /user/ksandeep4/output/export/output.csv
+
+
+
+
+
+
+
+
+
+
