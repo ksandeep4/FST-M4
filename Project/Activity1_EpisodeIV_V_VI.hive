@@ -1,0 +1,30 @@
+-- For EpisodeIV
+#creating the tables
+CREATE TABLE episodeIVdialogues (name STRING, line String) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+#Loading the data
+LOAD DATA LOCAL INPATH '/episodeIV_dialouges.txt' INTO TABLE episodeIVdialogues;
+#running the query and copying the results to HDFS / Local file system
+INSERT OVERWRITE DIRECTORY '/user/ksandeep4/EpisodeIVDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeIVdialogues GROUP BY name ORDER BY NoOfLines DESC;
+#running the query and copying the results to Local file system
+INSERT OVERWRITE LOCAL DIRECTORY '/user/ksandeep4/EpisodeIVDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeIVdialogues GROUP BY name ORDER BY NoOfLines DESC;
+
+
+-- For EpisodeV
+#creating the tables
+CREATE TABLE episodeVdialogues (name STRING, line String) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+#Loading the data
+LOAD DATA LOCAL INPATH '/episodeV_dialouges.txt' INTO TABLE episodeVdialogues;
+#running the query and copying the results to HDFS / Local file system
+INSERT OVERWRITE DIRECTORY '/user/ksandeep4/EpisodeVDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeVdialogues GROUP BY name ORDER BY NoOfLines DESC;
+#running the query and copying the results to Local file system
+INSERT OVERWRITE LOCAL DIRECTORY '/user/ksandeep4/EpisodeVDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeVdialogues GROUP BY name ORDER BY NoOfLines DESC;
+
+-- For EpisodeVI
+#creating the tables
+CREATE TABLE episodeVIdialogues (name STRING, line String) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+#Loading the data
+LOAD DATA LOCAL INPATH '/episodeVI_dialouges.txt' INTO TABLE episodeVIdialogues;
+#running the query and copying the results to HDFS
+INSERT OVERWRITE DIRECTORY '/user/ksandeep4/EpisodeVIDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeVIdialogues GROUP BY name ORDER BY NoOfLines DESC;
+#running the query and copying the results to Local file system
+INSERT OVERWRITE LOCAL DIRECTORY '/user/ksandeep4/EpisodeVIDialogueCount' ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' SELECT name, COUNT(line) AS NoOfLines FROM episodeVIdialogues GROUP BY name ORDER BY NoOfLines DESC;
